@@ -1,7 +1,7 @@
 from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 
-from src.crud.app import api_router as v1_crud_router
+from src.user.app import api_router as v1_crud_router
 
 
 # App Settings
