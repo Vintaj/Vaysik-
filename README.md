@@ -1,1 +1,1 @@
-# fastapi_crud
+# Vaysik
