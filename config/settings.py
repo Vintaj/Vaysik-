@@ -16,3 +16,6 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
 # Database Settings
 client = AsyncIOMotorClient("mongodb://localhost:27017/")
+
+
+collect = client["crud_db"]
