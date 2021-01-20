@@ -18,5 +18,7 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 client = AsyncIOMotorClient("mongodb://localhost:27017/")
 db = client["vaysik"]
 
-# collections
 user_collection = db["users"]
+
+
+# Logger Settings

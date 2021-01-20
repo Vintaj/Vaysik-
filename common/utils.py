@@ -3,6 +3,7 @@ import bson
 
 
 async def generate_id() -> str:
+
     return str(bson.objectid.ObjectId())
 
 
