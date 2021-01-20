@@ -13,3 +13,6 @@ pre-commit = "*"
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+app = "python3 main.py"
