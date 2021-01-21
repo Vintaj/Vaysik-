@@ -8,6 +8,9 @@ fastapi = "*"
 uvicorn = "*"
 odmantic = "*"
 pre-commit = "*"
+python-multipart = "*"
+python-jose = "*"
+passlib = "*"
 
 [dev-packages]
 

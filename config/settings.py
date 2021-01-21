@@ -21,4 +21,7 @@ db = client["vaysik"]
 user_collection = db["users"]
 
 
-# Logger Settings
+# Auth Settings
+SECRET_KEY = "f0c79a1de9b007c382039f90919ca902be99e56a59891af9a35ee338a1ef578e"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30
