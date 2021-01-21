@@ -1,3 +1,4 @@
+from typing import Optional
 from fastapi import APIRouter, HTTPException, status, Depends
 from fastapi.encoders import jsonable_encoder
 
@@ -30,7 +31,7 @@ async def create_user(user: User):
 
 @router.get("/get_user_data/{username}", response_model=UserDetailResponse)
 async def get_user_detail(username: str = Depends(UserDetailRequest)):
-    request_data = jsonable_encoder(login)
+    request_data = jsonable_encoder(username)
 
     data = await user_collection.find_one({"username": request_data["username"]})
     return data
@@ -44,3 +45,11 @@ async def get_all_users():
     ).to_list(length=None)
 
     return users_data
+
+
+@router.get("/items/")
+async def read_items(q: Optional[str] = None):
+    result = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
+    if q:
+        result.update({"q": q})
+    return result
