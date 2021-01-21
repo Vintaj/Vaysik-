@@ -18,5 +18,10 @@ BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 client = AsyncIOMotorClient("mongodb://localhost:27017/")
 db = client["vaysik"]
 
-# collections
 user_collection = db["users"]
+
+
+# Auth Settings
+SECRET_KEY = "f0c79a1de9b007c382039f90919ca902be99e56a59891af9a35ee338a1ef578e"
+ALGORITHM = "HS256"
+ACCESS_TOKEN_EXPIRE_MINUTES = 30

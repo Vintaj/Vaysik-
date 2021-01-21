@@ -1,8 +1,11 @@
+#!/usr/bin/python3
+
 from typing import Dict
 import bson
 
 
 async def generate_id() -> str:
+
     return str(bson.objectid.ObjectId())
 
 
