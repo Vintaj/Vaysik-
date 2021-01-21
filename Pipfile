@@ -11,8 +11,13 @@ pre-commit = "*"
 python-multipart = "*"
 python-jose = "*"
 passlib = "*"
+flake8 = "*"
+isort = "*"
 
 [dev-packages]
 
 [requires]
 python_version = "3.8"
+
+[scripts]
+app = "python3 main.py"
