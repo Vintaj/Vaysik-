@@ -7,7 +7,6 @@ from pathlib import Path
 
 # database imports
 from motor.motor_asyncio import AsyncIOMotorClient
-from odmantic import AIOEngine
 
 
 # Base App Settings

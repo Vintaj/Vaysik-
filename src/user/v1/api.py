@@ -27,7 +27,7 @@ async def create_user(user: User):
         )
 
 
-@router.get("/get_user_data/{username}", response_model=UserDetailResponse)
+@router.get("/get_one/", response_model=UserDetailResponse)
 async def get_user_detail(username: str = Depends(UserDetailRequest)):
     request_data = jsonable_encoder(username)
 
@@ -35,7 +35,7 @@ async def get_user_detail(username: str = Depends(UserDetailRequest)):
     return data
 
 
-@router.get("/all/")
+@router.get("/get_all/")
 async def get_all_users():
 
     users_data = await user_collection.find(
