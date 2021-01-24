@@ -13,6 +13,8 @@ python-jose = "*"
 passlib = "*"
 flake8 = "*"
 isort = "*"
+black = "*"
+autopep8 = "*"
 
 [dev-packages]
 
