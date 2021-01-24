@@ -1,39 +1,19 @@
 import hashlib
 import uuid
-from .models import User, UserInDB, Room, RoomInDB, Message, MessageInDB
+from .models import Room, RoomInDB, Message, MessageInDB
 
 # from bson import ObjectId
-from .mongodb import get_nosql_db
-from .config import MONGODB_DB_NAME
+from config.settings import rooms_collection, user_collection, message_collection
+from src.user.v1.models import User
 
-
-async def create_user(request, collection):
-    salt = uuid.uuid4().hex
-    hashed_password = hashlib.sha512(request.password.encode("utf-8") + salt.encode("utf-8")).hexdigest()
-
-    user = {}
-    user["username"] = request.username
-    user["salt"] = salt
-    user["hashed_password"] = hashed_password
-    # user = User(**user)
-    dbuser = UserInDB(**user)
-    response = await collection.insert_one(dbuser.dict())
-    return {"id_inserted": str(response.inserted_id)}
-
-def verify_password(plain_password_w_salt, hashed_password):
-    checked_password = hashlib.sha512(plain_password_w_salt.encode("utf-8")).hexdigest()
-    return checked_password == hashed_password
-
-
-async def get_user(name) -> UserInDB:
-    client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    collection = db.users
-    row = await collection.find_one({"username": name})
+async def get_user(name) -> User:
+    row = await user_collection.find_one({"username": name})
     if row is not None:
-        return UserInDB(**row)
+        return User(**row)
     else:
         return None
+
+# Room
 
 async def insert_room(username, room_name, collection):
     room = {}
@@ -46,21 +26,54 @@ async def insert_room(username, room_name, collection):
     return {"id_inserted": str(response.inserted_id)}
 
 async def get_rooms():
-    client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    collection = db.rooms
-    rows = collection.find()
+    rows = rooms_collection.find()
     row_list = []
     async for row in rows:
         row_list.append(RoomInDB(**row))
     return row_list
 
 async def get_room(room_name) -> RoomInDB:
-    client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    collection = db.rooms
-    row = await collection.find_one({"room_name": room_name})
+    row = await rooms_collection.find_one({"room_name": room_name})
     if row is not None:
         return RoomInDB(**row)
+    else:
+        return None
+
+# Message
+
+async def insert_message(username, content, collection):
+    """
+        
+    """
+
+    message = {}
+    message["content"] = content
+    user = await get_user(username)
+    message["user"] = user if user is not None else None
+    # room = Room(**room)
+    dbmessage = MessageInDB(**message)
+    response = await collection.insert_one(dbmessage.dict())
+    return {"id_inserted": str(response.inserted_id)}
+
+
+async def get_messages():
+    """
+        
+    """
+
+    rows = message_collection.find()
+    row_list = []
+    async for row in rows:
+        row_list.append(MessageInDB(**row))
+    return row_list
+
+async def get_message(content) -> MessageInDB:
+    """
+        
+    """
+
+    row = await rooms_collection.find_one({"content": content})
+    if row is not None:
+        return MessageInDB(**row)
     else:
         return None

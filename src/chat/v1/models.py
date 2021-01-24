@@ -3,24 +3,18 @@ from typing import List, Optional, Dict
 from pydantic import BaseModel, Field
 from datetime import datetime
 from bson import ObjectId
+from src.user.v1.models import User
 
 class RoomCreateRequest(BaseModel):
     username: str
     room_name: str
 
-# nosql/mongodb
-class User(BaseModel):
+class MessageCreateRequest(BaseModel):
     username: str
-    hashed_password: str
-    salt: str
-
-
-class UserInDB(User):
-    _id: ObjectId
-    date_created: datetime = Field(default_factory=datetime.utcnow)
+    content: str
 
 class Message(BaseModel):
-    user: UserInDB
+    user: User
     content: str = None
 
 
@@ -30,7 +24,7 @@ class MessageInDB(Message):
 
 class Room(BaseModel):
     room_name: str
-    members: Optional[List[UserInDB]] = []
+    members: Optional[List[User]] = []
     messages: Optional[List[MessageInDB]] = []
     last_pinged: datetime = Field(default_factory=datetime.utcnow)
 
