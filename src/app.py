@@ -1,7 +1,8 @@
 from fastapi import FastAPI, APIRouter
 from starlette.middleware.cors import CORSMiddleware
 
-from src.crud.app import api_router as v1_crud_router
+from src.user.app import api_router as v1_user_router
+from src.authorization.app import api_router as v1_auth_router
 
 from src.chat.app import chat_router as v1_chat_router
 
@@ -25,6 +26,7 @@ async def health_check():
 
 # Router Settings
 
-app.include_router(v1_crud_router, prefix="/v1")
-
 app.include_router(v1_chat_router, prefix="/v1/chat")
+app.include_router(v1_user_router, prefix="/v1/user")
+app.include_router(v1_auth_router, prefix="/auth")
+
