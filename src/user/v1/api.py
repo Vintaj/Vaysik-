@@ -1,13 +1,11 @@
-from typing import Optional
-from fastapi import APIRouter, HTTPException, status, Depends
-from fastapi.encoders import jsonable_encoder
-
-from config.settings import user_collection
-from src.authorization.utils import get_password_hash
-
-from .models import User, UserDetailRequest, UserDetailResponse
-
 from common.utils import serialize_to_mongo
+from config.settings import user_collection
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.encoders import jsonable_encoder
+from src.authorization.utils import get_password_hash
+from src.authorization.v1.api import get_current_user, oauth2_scheme
+
+from .models import FriendshipRequest, User, UserDetailRequest, UserDetailResponse
 from .validators import validate_login
 
 router = APIRouter()
@@ -47,9 +45,16 @@ async def get_all_users():
     return users_data
 
 
-@router.get("/items/")
-async def read_items(q: Optional[str] = None):
-    result = {"items": [{"item_id": "Foo"}, {"item_id": "Bar"}]}
-    if q:
-        result.update({"q": q})
-    return result
+@router.post("/friend_request/", status_code=status.HTTP_201_CREATED)
+async def friend_request(
+    user_id: str = Depends(FriendshipRequest), token: str = Depends(oauth2_scheme)
+):
+    request_data = jsonable_encoder(user_id)
+    current_user = await get_current_user(token)
+
+    await user_collection.update_one(
+        {"_id": request_data["user_id"]},
+        {"$push": {"friend_request.unprocessed_requests": current_user["_id"]}},
+    )
+
+    return {"201": "Request Sent"}

@@ -2,67 +2,7 @@ exclude: '^$|settings|scripts'
 fail_fast: false
 repos:
 
-
-- repo: git@github.com:pre-commit/pre-commit-hooks
-  rev: v2.1.0
-  hooks:
-    - id: check-added-large-files
-    - id: debug-statements
-    - id: double-quote-string-fixer
-    - id: end-of-file-fixer
-      exclude: 'static'
-    - id: fix-encoding-pragma
-      args: ['--remove']
-    - id: check-merge-conflict
-    - id: check-symlinks
-    - id: trailing-whitespace
-    - id: mixed-line-ending
-      args: ['--fix=lf']
-    - id: flake8
-      additional_dependencies: [
-      'flake8-blind-except',
-      'flake8-commas',
-      'flake8-comprehensions',
-      'flake8-deprecated',
-      'flake8-docstrings',
-      'flake8-meiqia',
-      'flake8-mutable',
-      'flake8-pep3101',
-      'flake8-quotes',
-      'flake8-string-format',
-      'flake8-tidy-imports',
-      ]
-
-- repo: git@github.com:humitos/mirrors-autoflake.git
-  rev: v1.1
-  hooks:
-    - id: autoflake
-      args: ['--in-place', '--remove-all-unused-imports', '--remove-unused-variable']
-
-- repo: git@github.com:pre-commit/mirrors-yapf.git
-  rev: v0.26.0
-  hooks:
-    - id: yapf
-      exclude: 'migrations|tests'
-      args: ['--style=.style.yapf', '--parallel', '--in-place']
-
-- repo: git@github.com:FalconSocial/pre-commit-python-sorter.git
-  rev: b57843b0b874df1d16eb0bef00b868792cb245c2
-  hooks:
-    - id: python-import-sorter
-      args: ['--silent-overwrite']
-      exclude: 'wsgi.py'
-
-- repo: git@github.com:myint/docformatter.git
-  rev: v1.1
-  hooks:
-    - id: docformatter
-      args: ['--in-place', '--wrap-summaries=80', '--wrap-descriptions=80', '--pre-summary-newline']
-
-- repo: git://github.com/guykisel/prospector-mirror
-  rev: 7ff847e779347033ebbd9e3b88279e7f3a998b45
-  hooks:
-    - id: prospector
-      language: system
-      files: '\.py$'
-      args: ['--profile=prospector', '--profile-path=.']
+-   repo: https://github.com/psf/black
+    rev: 19.3b0
+    hooks:
+    -   id: black

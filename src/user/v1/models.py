@@ -1,9 +1,7 @@
-from typing import List, Dict, Optional
-from pydantic import BaseModel, validator
-
 import re
+from typing import Optional
 
-from config.settings import user_collection
+from pydantic import BaseModel, validator
 
 
 class User(BaseModel):
@@ -32,6 +30,11 @@ class User(BaseModel):
         orm_mode = True
 
 
+class UserDetailData(BaseModel):
+    age: int
+    status: str
+
+
 class UserMedia(BaseModel):
     pass
 
@@ -47,3 +50,7 @@ class UserDetailResponse(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class FriendshipRequest(BaseModel):
+    user_id: str
