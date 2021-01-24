@@ -39,18 +39,5 @@ class UserMedia(BaseModel):
     pass
 
 
-class UserDetailRequest(BaseModel):
-    username: str
-
-
-class UserDetailResponse(BaseModel):
-    first_name: str
-    last_name: str
-    email: str
-
-    class Config:
-        orm_mode = True
-
-
-class FriendshipRequest(BaseModel):
+class FriendRequest(BaseModel):
     user_id: str
