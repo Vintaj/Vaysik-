@@ -1,10 +1,41 @@
-from typing import List, Dict
-from pydantic import BaseModel
+
+from typing import List, Optional, Dict
+from pydantic import BaseModel, Field
+from datetime import datetime
+from bson import ObjectId
+
+class RoomCreateRequest(BaseModel):
+    username: str
+    room_name: str
+
+# nosql/mongodb
+class User(BaseModel):
+    username: str
+    hashed_password: str
+    salt: str
 
 
-class Book(BaseModel):
-    name: str
-    pages: int
+class UserInDB(User):
+    _id: ObjectId
+    date_created: datetime = Field(default_factory=datetime.utcnow)
 
-    class Config:
-        schema_extra = {"name": "book", "pages": 12}
+class Message(BaseModel):
+    user: UserInDB
+    content: str = None
+
+
+class MessageInDB(Message):
+    _id: ObjectId
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+class Room(BaseModel):
+    room_name: str
+    members: Optional[List[UserInDB]] = []
+    messages: Optional[List[MessageInDB]] = []
+    last_pinged: datetime = Field(default_factory=datetime.utcnow)
+
+
+class RoomInDB(Room):
+    _id: ObjectId
+    date_created: datetime = Field(default_factory=datetime.utcnow)
+

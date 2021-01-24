@@ -9,5 +9,3 @@ api_router.include_router(router)
 
 
 # Database settings
-
-crud_database = client["crud_db"]

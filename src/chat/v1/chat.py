@@ -1,14 +1,24 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, FastAPI, WebSocket, Request, Depends
 from fastapi.encoders import jsonable_encoder
 from typing import Optional
 from fastapi import Cookie, Depends, FastAPI, Query, WebSocket, status
 from fastapi.responses import HTMLResponse
-from starlette.websockets import WebSocket
+from collections import defaultdict
+import logging
+from fastapi.templating import Jinja2Templates
+from .mongodb import close_mongo_connection, connect_to_mongo, get_nosql_db, AsyncIOMotorClient
+from pydantic import BaseModel
+from starlette.middleware.cors import CORSMiddleware
+from .config import MONGODB_DB_NAME
+from .controllers import create_user, verify_password, insert_room, get_rooms
+from starlette.websockets import WebSocket, WebSocketDisconnect
+import pymongo
+
+from .models import Room, RoomCreateRequest
 
 # var ws = new WebSocket("ws://localhost:8000/v1/chat/ws");
 
 router = APIRouter()
-
 
 html = """
 <!DOCTYPE html>
@@ -69,14 +79,27 @@ class ConnectionManager:
 
 manager = ConnectionManager()
 
+@router.put("/create_room")
+async def create_room(request: RoomCreateRequest, client: AsyncIOMotorClient = Depends(get_nosql_db)):
+    db = client[MONGODB_DB_NAME]
+    collection = db.rooms
+    res = await insert_room(request.username, request.room_name, collection)
+    return res
 
-@router.get("/")
+@router.get("/rooms")
+async def rooms(client: AsyncIOMotorClient = Depends(get_nosql_db)):
+    rooms = await get_rooms()
+    return rooms
+
+
+@router.get("/")    
 async def get():
     return HTMLResponse(html)
 
 
 @router.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
+    # Подключение к серверу
     await manager.connect(websocket)
     try:
         while True:

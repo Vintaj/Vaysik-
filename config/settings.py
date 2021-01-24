@@ -19,3 +19,5 @@ client = AsyncIOMotorClient("mongodb://localhost:27017/")
 
 
 collect = client["crud_db"]
+
+

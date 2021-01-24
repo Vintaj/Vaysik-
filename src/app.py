@@ -8,6 +8,7 @@ from src.chat.app import chat_router as v1_chat_router
 
 # App Settings
 app = FastAPI()
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[""],
