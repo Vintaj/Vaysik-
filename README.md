@@ -1,5 +1,4 @@
 # Vaysik
-# Vaysik
 ## Functional:
 * Register, Authorization
 * Chat (in developing)
