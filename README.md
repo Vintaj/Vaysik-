@@ -2,7 +2,7 @@
 ## Functional:
 * Register, Authorization
 * Chat (in developing)
-* Friend
+* Friends
 * News 
 ## In developing applied:
 + Python
