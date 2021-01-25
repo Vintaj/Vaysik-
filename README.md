@@ -5,7 +5,7 @@
 * Friends
 * News 
 ## In developing applied:
-+ Python
++ Python 3.8
 + FastApi
 + WebSocket
 + Simplejwt 
