@@ -151,3 +151,23 @@ async def friend_request_decline(
     )
 
     return {"201": "RequestDeclined"}
+
+
+@router.get('/friend/counter', status_code=status.HTTP_200_OK)
+async def friend_request_counter(user_id: str) -> List[dict]:
+    """
+        PROCESS:
+            Shows requests count
+    """
+    request_data = jsonable_encoder(user_id)
+    count = await user_collection.find_one({
+        "_id": request_data,
+        "friend_request.unprocessed_request": {"$ne": True},
+    })
+    if not await user_collection.find_one({"_id": request_data}):
+        return {"404": "UserNotFound"}
+
+    print(count)
+    return {"200": len(
+        count['friend_request']['unprocessed_requests']
+    )}
