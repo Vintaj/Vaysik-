@@ -166,7 +166,6 @@ async def friend_request_counter(user_id: str) -> List[dict]:
     if not await user_collection.find_one({"_id": request_data}):
         return {"404": "UserNotFound"}
 
-    print(count)
     return {"200": len(
         count['friend_request']['unprocessed_requests']
     )}
