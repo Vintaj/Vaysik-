@@ -98,6 +98,7 @@ async def friend_request(
             {"$push": {"friend_request.unprocessed_requests": current_user["_id"]}},
         )
         return {"201": "RequestSent"}
+    print('atatatatata')
 
     return {"401": "Request Already Been Sent"}
 
