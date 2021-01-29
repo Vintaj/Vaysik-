@@ -92,8 +92,12 @@ async def friend_request(
             "friend_request.unprocessed_requests": {"$in": [current_user["_id"]]},
         }
     ):
+        if current_user['_id'] == request_data["user_id"]:
+
+            return {"404": "SameAsSenderID"}
 
         await user_collection.update_one(
+
             {"_id": request_data["user_id"]},
             {"$push": {"friend_request.unprocessed_requests": current_user["_id"]}},
         )
