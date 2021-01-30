@@ -25,7 +25,7 @@ async def create_user(user: User) -> List[dict]:
     """
     request_data = await serialize_to_mongo(jsonable_encoder(user))
 
-    if not await validate_login(request_data["username"]):
+    if not await User.validate_login(request_data["username"], user_collection):
         request_data["hashed_password"] = await get_password_hash(
             request_data["password"]
         )
