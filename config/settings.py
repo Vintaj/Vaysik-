@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+from fastapi import FastAPI
+from starlette.middleware.cors import CORSMiddleware
+
 # system imports
 import os
 from pathlib import Path
@@ -12,6 +15,14 @@ from motor.motor_asyncio import AsyncIOMotorClient
 # Base App Settings
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
 
+app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[""],
+    allow_credentials=True,
+    allow_methods=[""],
+    allow_headers=["*"],
+)
 
 # Database Settings
 client = AsyncIOMotorClient("mongodb://localhost:27017/")
