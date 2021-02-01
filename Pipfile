@@ -63,7 +63,7 @@ virtualenv = "==20.4.0"
 webencodings = "==0.5.1"
 CacheControl = "==0.12.6"
 PyYAML = "==5.4"
-
+strsimpy = "==0.2.0"
 [dev-packages]
 
 [requires]
