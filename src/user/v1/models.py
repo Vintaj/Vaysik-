@@ -24,6 +24,10 @@ class User(BaseModel):
         if len(v) < 8:
             raise ValueError("len needs to be more then 8")
         return v
+    
+    @staticmethod
+    async def validate_login(login: str, db_collection):
+        return await db_collection.find_one({"username": login})
 
     class Config:
         orm_mode = True
