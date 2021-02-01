@@ -8,7 +8,7 @@ from src.authorization.v1.api import get_current_user, oauth2_scheme
 
 from .models import FriendRequest, User
 from .validators import validate_login
-from strsimpy.jaro_winkler import JaroWinkler
+
 from datetime import datetime
 
 router = APIRouter()
