@@ -8,6 +8,8 @@ from src.authorization.v1.api import get_current_user, oauth2_scheme
 
 from .models import FriendRequest, User
 from .validators import validate_login
+from strsimpy.jaro_winkler import JaroWinkler
+from datetime import datetime
 
 router = APIRouter()
 
@@ -26,9 +28,11 @@ async def create_user(user: User) -> List[dict]:
     request_data = await serialize_to_mongo(jsonable_encoder(user))
 
     if not await validate_login(request_data["username"]):
-        request_data["hashed_password"] = await get_password_hash(
+        request_data["hashed password"] = await get_password_hash(
             request_data["password"]
         )
+        request_data.pop("password", None)
+        request_data["created_at"] = datetime.now()
         await user_collection.insert_one(request_data)
         return user
     else:
