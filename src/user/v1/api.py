@@ -8,7 +8,6 @@ from src.authorization.v1.api import get_current_user, oauth2_scheme
 
 from .models import FriendRequest, User
 from .validators import validate_login
-
 from datetime import datetime
 
 router = APIRouter()
@@ -27,6 +26,10 @@ async def create_user(user: User) -> List[dict]:
     """
     request_data = await serialize_to_mongo(jsonable_encoder(user))
 
+    if  not await User.similarity(request_data["username"], request_data["password"]):
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Password is to similarity"
+        )
     if not await User.validate_login(request_data["username"], user_collection):
         request_data["hashed_password"] = await get_password_hash(
             request_data["password"]
@@ -39,7 +42,6 @@ async def create_user(user: User) -> List[dict]:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Login Exists"
         )
-
 
 @router.get("/get_one/")
 async def get_user_detail(username: str) -> List[dict]:
