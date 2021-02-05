@@ -179,3 +179,20 @@ async def friend_request_counter(user_id: str) -> List[dict]:
     return {"200": len(
         count['friend_request']['unprocessed_requests']
     )}
+
+
+@router.get('/friend_list', status_code=status.HTTP_200_OK)
+async def friend_list(user_id: str) -> List[dict]:
+    """
+        PROCESS:
+            Shows friend request list 
+    """
+    request_data = jsonable_encoder(user_id)
+    users_list = await user_collection.find(
+        {}, {"_id": 1, "username": 1}
+    ).to_list(length=None)
+    
+    if not await user_collection.find_one({"_id": request_data}):
+        return {"404": "UserNotFound"}
+    
+    return users_list
