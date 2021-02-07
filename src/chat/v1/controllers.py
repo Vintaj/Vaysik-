@@ -112,18 +112,18 @@ async def send_message(roomId, userId, message):
 
     new_message = message
     insert_messageId(userId, message, message_collection)
-    room_messages = room.get("messages")
-    if room_messages != None:
-        new_messages = room_messages.append({"meesage": new_message})
-    else:
-        new_messages = []
-    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$set': {'messages': new_messages}})
+    # room_messages = room.get("messages")
+    # if room_messages != None:
+    #     new_messages = room_messages.append({"meesage": new_message})
+    # else:
+    #     new_messages = []
+    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$addToSet': {'messages': new_message}})
 
     print (" - ")
     print (f" -- user {user}")
     print (f" -- room {room}")
     print (f" -- new_message {new_message}")
-    print (f" -- room_messages {room_messages}")
+    # print (f" -- room_messages {room_messages}")
     print (f" -- create_message {create_message}")
     print (" - ")
 
