@@ -1,6 +1,6 @@
-from fastapi import FastAPI, APIRouter
-from starlette.middleware.cors import CORSMiddleware
+from fastapi import APIRouter
 
+from config.settings import app
 from src.user.app import api_router as v1_user_router
 from src.authorization.app import api_router as v1_auth_router
 
@@ -8,6 +8,7 @@ from src.chat.app import chat_router as v1_chat_router
 
 
 # App Settings
+
 app = FastAPI()
 
 app.add_middleware(
@@ -17,6 +18,7 @@ app.add_middleware(
     allow_methods=[""],
     allow_headers=["*"],
 )
+
 
 
 @app.get("/health", tags=["health"], include_in_schema=False)
