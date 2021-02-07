@@ -14,13 +14,6 @@ async def get_user(name) -> User:
     else:
         return None
 
-async def get_userId(userId) -> User:
-    row = await user_collection.find_one({"_id": userId})
-    if row is not None:
-        return User(**row)
-    else:
-        return None
-
 async def insert_room(username, room_name, collection):
     room = {}
     room["room_name"] = room_name
@@ -44,15 +37,6 @@ async def get_room(room_name) -> RoomInDB:
         return RoomInDB(**row)
     else:
         return None
-
-async def get_roomId(roomId) -> RoomInDB:
-    row = await rooms_collection.find_one({"_id": ObjectId(roomId)})
-    if row is not None:
-        return RoomInDB(**row)
-    else:
-        return None
-
-# Message
 
 async def insert_message(username, content, collection):
     """
@@ -118,13 +102,22 @@ async def send_message(roomId, userId, message):
     """
 
 
-    user = get_userId(userId)
-    room = get_roomId(roomId)
+    #user = get_userId(userId)
+    #room = get_roomId(roomId)
+    user = await user_collection.find_one({"id": userId})
+    room = await rooms_collection.find_one({"_id": ObjectId(roomId)})
+    print( " -- " )
     print (f" -- room {room}")
+    print( " -- " )
+
     new_message = message
-    await insert_messageId(userId, message, message_collection)
-    room_messages = room.messages
-    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$set': {'messages': room_messages.append(new_message)}})
+    insert_messageId(userId, message, message_collection)
+    room_messages = room.get("messages")
+    if room_messages != None:
+        new_messages = room_messages.append({"meesage": new_message})
+    else:
+        new_messages = []
+    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$set': {'messages': new_messages}})
 
     print (" - ")
     print (f" -- user {user}")
