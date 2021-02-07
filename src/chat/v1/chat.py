@@ -132,7 +132,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         Подключение к серверу
         Ендпоинт вебсокета который демонстрирует общение.
     
-        
+
     """
 
 
@@ -142,7 +142,10 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data = await websocket.receive_text()
             await manager.send_personal_message(f"You wrote: {data}", websocket)
             await manager.broadcast(f"Client #{client_id} says: {data}")
-            # await send_message("", "", data)
+            # await send_message(roomId, userId, message)
+            await send_message("601eed3a4e7709d773bf7789", "601faca84b9a40393eb936db", data)
+            
+
             print(f"You wrote: {data}", websocket)
             print(f"Client #{client_id} says: {data}")
 

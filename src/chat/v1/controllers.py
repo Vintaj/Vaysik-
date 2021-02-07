@@ -1,9 +1,10 @@
 import hashlib
 import uuid
-from .models import Room, RoomInDB, Message, MessageInDB
+from bson import ObjectId
 
-# from bson import ObjectId
+
 from config.settings import rooms_collection, user_collection, message_collection
+from .models import Room, RoomInDB, Message, MessageInDB
 from src.user.v1.models import User
 
 async def get_user(name) -> User:
@@ -14,7 +15,7 @@ async def get_user(name) -> User:
         return None
 
 async def get_userId(userId) -> User:
-    row = await user_collection.find_one({"_id": ObjectId(userId)})
+    row = await user_collection.find_one({"_id": userId})
     if row is not None:
         return User(**row)
     else:
@@ -55,12 +56,30 @@ async def get_roomId(roomId) -> RoomInDB:
 
 async def insert_message(username, content, collection):
     """
+
+        Создание сообщения по id
         
     """
 
     message = {}
     message["content"] = content
     user = await get_user(username)
+    message["user"] = user if user is not None else None
+    # room = Room(**room)
+    dbmessage = MessageInDB(**message)
+    response = await collection.insert_one(dbmessage.dict())
+    return {"id_inserted": str(response.inserted_id)}
+
+async def insert_messageId(userId, content, collection):
+    """
+
+        Создание сообщения по id пользователя
+        
+    """
+
+    message = {}
+    message["content"] = content
+    user = await get_userId(userId)
     message["user"] = user if user is not None else None
     # room = Room(**room)
     dbmessage = MessageInDB(**message)
@@ -94,15 +113,25 @@ async def send_message(roomId, userId, message):
 
     """
         
-        Ендпоинт вебсокета который демонстрирует общение.
+        Основная логика отправки сообщений в комнату.
         
     """
 
+
     user = get_userId(userId)
     room = get_roomId(roomId)
-    new_message = message.dict()
+    print (f" -- room {room}")
+    new_message = message
+    await insert_messageId(userId, message, message_collection)
     room_messages = room.messages
     create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$set': {'messages': room_messages.append(new_message)}})
 
+    print (" - ")
+    print (f" -- user {user}")
+    print (f" -- room {room}")
+    print (f" -- new_message {new_message}")
+    print (f" -- room_messages {room_messages}")
+    print (f" -- create_message {create_message}")
+    print (" - ")
 
     return { '201': 'message sending' }
