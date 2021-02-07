@@ -8,6 +8,14 @@ from .models import Room, RoomInDB, Message, MessageInDB
 from src.user.v1.models import User
 
 async def get_user(name) -> User:
+    """
+
+        Найти пользователя по его никнейму
+        Search user by her username
+        
+    """
+
+
     row = await user_collection.find_one({"username": name})
     if row is not None:
         return User(**row)
@@ -15,6 +23,13 @@ async def get_user(name) -> User:
         return None
 
 async def insert_room(username, room_name, collection):
+
+    """
+    
+        ---
+        
+    """
+
     room = {}
     room["room_name"] = room_name
     user = await get_user(username)
@@ -25,6 +40,14 @@ async def insert_room(username, room_name, collection):
     return {"id_inserted": str(response.inserted_id)}
 
 async def get_rooms():
+
+    """
+
+        Список комнат
+        List room
+        
+    """
+
     rows = rooms_collection.find()
     row_list = []
     async for row in rows:
@@ -32,6 +55,15 @@ async def get_rooms():
     return row_list
 
 async def get_room(room_name) -> RoomInDB:
+
+    """
+
+        Найти комнату по ее названию
+        Search room by her name
+        
+    """
+
+
     row = await rooms_collection.find_one({"room_name": room_name})
     if row is not None:
         return RoomInDB(**row)
@@ -42,6 +74,7 @@ async def insert_message(username, content, collection):
     """
 
         Создание сообщения по id
+        Creating message by id
         
     """
 
@@ -58,6 +91,7 @@ async def insert_messageId(userId, content, collection):
     """
 
         Создание сообщения по id пользователя
+        Create message by id user
         
     """
 
@@ -74,6 +108,9 @@ async def insert_messageId(userId, content, collection):
 async def get_messages():
     """
         
+        List message
+        Список сообщений
+
     """
 
     rows = message_collection.find()
@@ -85,6 +122,9 @@ async def get_messages():
 async def get_message(content) -> MessageInDB:
     """
         
+        Search message by content
+        Поиск сообщения по контенту
+
     """
 
     row = await rooms_collection.find_one({"content": content})
@@ -98,33 +138,27 @@ async def send_message(roomId, userId, message):
     """
         
         Основная логика отправки сообщений в комнату.
+        Main logic sending message in room
+        Подключить логгирование
+        Сделать обработку исключений
         
     """
 
-
-    #user = get_userId(userId)
-    #room = get_roomId(roomId)
     user = await user_collection.find_one({"id": userId})
     room = await rooms_collection.find_one({"_id": ObjectId(roomId)})
-    print( " -- " )
-    print (f" -- room {room}")
-    print( " -- " )
 
     new_message = message
     insert_messageId(userId, message, message_collection)
-    # room_messages = room.get("messages")
-    # if room_messages != None:
-    #     new_messages = room_messages.append({"meesage": new_message})
-    # else:
-    #     new_messages = []
-    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$addToSet': {'messages': new_message}})
+    create_message = await rooms_collection.update_one(
+            {'_id': ObjectId(roomId)}, 
+            {'$addToSet': {'messages': new_message}}
+        )
 
-    print (" - ")
+    print (" ------------------------- ")
     print (f" -- user {user}")
     print (f" -- room {room}")
     print (f" -- new_message {new_message}")
-    # print (f" -- room_messages {room_messages}")
     print (f" -- create_message {create_message}")
-    print (" - ")
+    print (" ------------------------- ")
 
     return { '201': 'message sending' }

@@ -85,7 +85,9 @@ manager = ConnectionManager()
 @router.post("/create_room")
 async def create_room(request: RoomCreateRequest, token: str = Depends(oauth2_scheme)):
     """
+
         Create room  
+
     """
     res = await insert_room(request.username, request.room_name, rooms_collection)
     return {'201': 'room created'}
@@ -93,7 +95,9 @@ async def create_room(request: RoomCreateRequest, token: str = Depends(oauth2_sc
 @router.get("/rooms")
 async def rooms(token: str = Depends(oauth2_scheme)):
     """
+
         List room  
+
     """
     rooms = await get_rooms()
     return rooms
@@ -101,8 +105,11 @@ async def rooms(token: str = Depends(oauth2_scheme)):
 @router.get("/room/{room_name}")
 async def search_room(room_name, token: str = Depends(oauth2_scheme)):
     """
+
         Search room  
+
     """
+
 
     room = await get_room(room_name)
     return room
@@ -131,6 +138,8 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
 
         Подключение к серверу
         Ендпоинт вебсокета который демонстрирует общение.
+
+        Поменять данный вебсокет именно под комнату для отправки сообщений
     
 
     """
