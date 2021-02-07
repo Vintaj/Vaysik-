@@ -13,7 +13,12 @@ async def get_user(name) -> User:
     else:
         return None
 
-# Room
+async def get_userId(userId) -> User:
+    row = await user_collection.find_one({"_id": ObjectId(userId)})
+    if row is not None:
+        return User(**row)
+    else:
+        return None
 
 async def insert_room(username, room_name, collection):
     room = {}
@@ -34,6 +39,13 @@ async def get_rooms():
 
 async def get_room(room_name) -> RoomInDB:
     row = await rooms_collection.find_one({"room_name": room_name})
+    if row is not None:
+        return RoomInDB(**row)
+    else:
+        return None
+
+async def get_roomId(roomId) -> RoomInDB:
+    row = await rooms_collection.find_one({"_id": ObjectId(roomId)})
     if row is not None:
         return RoomInDB(**row)
     else:
@@ -77,3 +89,20 @@ async def get_message(content) -> MessageInDB:
         return MessageInDB(**row)
     else:
         return None
+
+async def send_message(roomId, userId, message):
+
+    """
+        
+        Ендпоинт вебсокета который демонстрирует общение.
+        
+    """
+
+    user = get_userId(userId)
+    room = get_roomId(roomId)
+    new_message = message.dict()
+    room_messages = room.messages
+    create_message = await rooms_collection.update_one({'_id': ObjectId(roomId)}, {'$set': {'messages': room_messages.append(new_message)}})
+
+
+    return { '201': 'message sending' }
