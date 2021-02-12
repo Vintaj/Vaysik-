@@ -1,8 +1,7 @@
 import re
 from typing import Optional
-
 from pydantic import BaseModel, validator
-
+from strsimpy.jaro_winkler import JaroWinkler
 
 class User(BaseModel):
     first_name: str
@@ -26,6 +25,19 @@ class User(BaseModel):
             raise ValueError("len needs to be more then 8")
         return v
 
+    @staticmethod
+    async def similarity(username:str, password:str):
+        jw = JaroWinkler()
+        res = jw.similarity(username, password)
+        if res <= 0.6:
+            return True
+        else:
+            return False
+    
+    @staticmethod
+    async def validate_login(login: str, db_collection):
+        return await db_collection.find_one({"username": login})
+
     class Config:
         orm_mode = True
 
@@ -39,18 +51,5 @@ class UserMedia(BaseModel):
     pass
 
 
-class UserDetailRequest(BaseModel):
-    username: str
-
-
-class UserDetailResponse(BaseModel):
-    first_name: str
-    last_name: str
-    email: str
-
-    class Config:
-        orm_mode = True
-
-
-class FriendshipRequest(BaseModel):
+class FriendRequest(BaseModel):
     user_id: str
