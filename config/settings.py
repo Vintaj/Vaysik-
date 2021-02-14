@@ -5,12 +5,14 @@ from starlette.middleware.cors import CORSMiddleware
 
 # system imports
 import os
+import logging
 from pathlib import Path
-
 
 # database imports
 from motor.motor_asyncio import AsyncIOMotorClient
 
+#Logging
+logging.basicConfig(filename='logfile.log') # debug, info, warning, error
 
 # Base App Settings
 BASE_DIR = Path(__file__).resolve(strict=True).parent.parent
@@ -23,6 +25,10 @@ app.add_middleware(
     allow_methods=[""],
     allow_headers=["*"],
 )
+
+#from pyngrok import ngrok
+#ssh_tunnel = ngrok.connect(8000, "http")
+#print( "ssh_tunnel: ", ssh_tunnel )
 
 # Database Settings
 client = AsyncIOMotorClient("mongodb://localhost:27017/")

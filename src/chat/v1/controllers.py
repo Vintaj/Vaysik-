@@ -22,7 +22,7 @@ async def get_user(name) -> User:
     else:
         return None
 
-async def insert_room(username, room_name, collection):
+async def insert_room(uid, room_name, collection):
 
     """
     
@@ -32,12 +32,14 @@ async def insert_room(username, room_name, collection):
 
     room = {}
     room["room_name"] = room_name
-    user = await get_user(username)
+    user = await user_collection.find_one({"_id": uid})
     room["members"] = [user] if user is not None else []
     # room = Room(**room)
     dbroom = RoomInDB(**room)
     response = await collection.insert_one(dbroom.dict())
     return {"id_inserted": str(response.inserted_id)}
+
+
 
 async def get_rooms():
 

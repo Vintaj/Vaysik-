@@ -6,7 +6,14 @@ from bson import ObjectId
 from src.user.v1.models import User
 
 class RoomCreateRequest(BaseModel):
-    username: str
+
+    """
+
+        Какой будет создаваться рума пользователем при запросе
+
+    """
+
+    uid: str
     room_name: str
 
 class MessageCreateRequest(BaseModel):
@@ -16,7 +23,6 @@ class MessageCreateRequest(BaseModel):
 class Message(BaseModel):
     user: User
     content: str = None
-
 
 class MessageInDB(Message):
     _id: ObjectId
@@ -30,6 +36,12 @@ class Room(BaseModel):
 
 
 class RoomInDB(Room):
+    """
+
+        Рума в базе данных
+
+    """
+
     _id: ObjectId
     date_created: datetime = Field(default_factory=datetime.utcnow)
 

@@ -19,8 +19,6 @@ from config.settings import rooms_collection, user_collection, message_collectio
 from .models import Room, RoomCreateRequest, MessageCreateRequest
 from src.authorization.v1.api import get_current_user, oauth2_scheme
 
-
-
 router = APIRouter()
 
 html = """
@@ -84,39 +82,25 @@ manager = ConnectionManager()
 
 @router.post("/create_room")
 async def create_room(request: RoomCreateRequest, token: str = Depends(oauth2_scheme)):
-    """
-
-        Create room  
-
-    """
-    res = await insert_room(request.username, request.room_name, rooms_collection)
+    print( f'request sosat {request.uid}' )
+    res = await insert_room(request.uid, request.room_name, rooms_collection)
+    logging.info(f"CREATE_ROOM: request.username: {request.username}, room_name: {request.room_name}")
     return {'201': 'room created'}
 
 @router.get("/rooms")
 async def rooms(token: str = Depends(oauth2_scheme)):
-    """
-
-        List room  
-
-    """
     rooms = await get_rooms()
     return rooms
 
 @router.get("/room/{room_name}")
 async def search_room(room_name, token: str = Depends(oauth2_scheme)):
-    """
-
-        Search room  
-
-    """
-
-
     room = await get_room(room_name)
     return room
 
 @router.post("/create_message")
 async def create_message(request: MessageCreateRequest, token: str = Depends(oauth2_scheme)):
     res = await insert_message(request.username, request.content, message_collection)
+    logging.info(f"SEND_MESSAGE: request.username: {request.username}, request.content: {request.content}")
     return {'201': 'room created'}
 
 @router.get("/messages")
@@ -130,6 +114,7 @@ async def messages(token: str = Depends(oauth2_scheme)):
 @router.get("/")    
 async def get():
     return HTMLResponse(html)
+
 
 @router.websocket("/ws/{client_id}")
 async def websocket_endpoint(websocket: WebSocket, client_id: int):
@@ -153,8 +138,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             await manager.broadcast(f"Client #{client_id} says: {data}")
             # await send_message(roomId, userId, message)
             await send_message("601ff693fb7694b194f391f5", "601faca84b9a40393eb936db", data)
-            
-
+        
             print(f"You wrote: {data}", websocket)
             print(f"Client #{client_id} says: {data}")
 

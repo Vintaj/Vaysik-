@@ -7,20 +7,6 @@ from src.authorization.app import api_router as v1_auth_router
 from src.chat.app import chat_router as v1_chat_router
 
 
-# App Settings
-
-app = FastAPI()
-
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=[""],
-    allow_credentials=True,
-    allow_methods=[""],
-    allow_headers=["*"],
-)
-
-
-
 @app.get("/health", tags=["health"], include_in_schema=False)
 async def health_check():
     return {"status": "ok"}
