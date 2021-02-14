@@ -71,3 +71,6 @@ python_version = "3.8"
 
 [scripts]
 app = "python3 main.py"
+
+[pipenv]
+allow_prereleases = true
