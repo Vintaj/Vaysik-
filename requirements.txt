@@ -1,0 +1,16 @@
+bcrypt==3.2.0
+fastapi==0.63.0
+motor==2.3.1
+pydantic==1.7.3
+pymongo==3.11.3
+pyngrok==5.0.2
+python-jose==3.2.0	
+python-multipart==0.0.5
+regex==2020.11.13
+requests==2.22.0
+uvicorn==0.13.3
+virtualenv==20.4.2
+websocket==0.2.1
+websockets==8.1
+passlib
+strsimpy

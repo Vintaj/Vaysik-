@@ -11,7 +11,6 @@ from src.chat.app import chat_router as v1_chat_router
 async def health_check():
     return {"status": "ok"}
 
-
 # Router Settings
 
 app.include_router(v1_chat_router, prefix="/v1/chat")
