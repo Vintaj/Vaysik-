@@ -1,4 +1,4 @@
-# Vaysik zap
+# Social Network - 💬 Vaysik 💬 
 ## Functional:
 * Register, Authorization
 * Chat (in developing)
