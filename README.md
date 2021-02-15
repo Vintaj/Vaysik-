@@ -1,4 +1,5 @@
 # Social Network - 💬 Vaysik 💬 👋
+Social Network
 ## Functional:
 * Register, Authorization
 * Chat (in developing)
