@@ -6,11 +6,7 @@ from bson import ObjectId
 from src.user.v1.models import User
 
 class RoomCreateRequest(BaseModel):
-
-    """
-
-        Какой будет создаваться рума пользователем при запросе
-
+    """ Создание румы по апи при запросе
     """
 
     uid: str
