@@ -119,3 +119,31 @@ INFO:uvicorn.error:Shutting down
 INFO:uvicorn.error:Waiting for application shutdown.
 INFO:uvicorn.error:Application shutdown complete.
 INFO:uvicorn.error:Finished server process [16059]
+INFO:uvicorn.error:Started server process [1]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [1]
+INFO:uvicorn.error:Started server process [1]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+ERROR:uvicorn.error:[Errno 99] error while attempting to bind on address ('::1', 5000, 0, 0): cannot assign requested address
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Started server process [1]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+ERROR:uvicorn.error:[Errno 99] error while attempting to bind on address ('0.0.0.1', 5000): cannot assign requested address
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Started server process [1]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [1]
