@@ -4,7 +4,11 @@ motor==2.3.1
 pydantic==1.7.3
 pymongo==3.11.3
 pyngrok==5.0.2
-python-jose==3.2.0	
+python-jose==3.2.0
+aiofiles == 0.6.0
+jinja2 == 2.11.2
+setuptools
+wheel
 python-multipart==0.0.5
 regex==2020.11.13
 requests==2.22.0
