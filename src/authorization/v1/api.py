@@ -16,6 +16,8 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 @router.post("/token", response_model=Token)
 async def login_for_access_token(form_data: OAuth2PasswordRequestForm = Depends()):
+    print("username", form_data.username)
+    print("password", form_data.password)
     user = await authenticate_user(form_data.username, form_data.password)
     if not user:
         raise HTTPException(

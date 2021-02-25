@@ -147,3 +147,168 @@ INFO:uvicorn.error:Shutting down
 INFO:uvicorn.error:Waiting for application shutdown.
 INFO:uvicorn.error:Application shutdown complete.
 INFO:uvicorn.error:Finished server process [1]
+INFO:uvicorn.error:Started server process [1]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Uvicorn running on http://0.0.0.0:5000 (Press CTRL+C to quit)
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [1]
+INFO:uvicorn.error:Started server process [50089]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Started server process [10453]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [10453]
+INFO:uvicorn.error:Started server process [31776]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Started server process [8265]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [8265]
+INFO:uvicorn.error:Started server process [10066]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [10066]
+INFO:uvicorn.error:Started server process [14841]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [14841]
+INFO:uvicorn.error:Started server process [15136]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [15136]
+INFO:uvicorn.error:Started server process [15170]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [15170]
+INFO:uvicorn.error:Started server process [15264]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [15264]
+INFO:uvicorn.error:Started server process [16270]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+ERROR:uvicorn.error:Exception in ASGI application
+Traceback (most recent call last):
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/uvicorn/protocols/http/h11_impl.py", line 394, in run_asgi
+    result = await app(self.scope, self.receive, self.send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/uvicorn/middleware/proxy_headers.py", line 45, in __call__
+    return await self.app(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/uvicorn/middleware/debug.py", line 81, in __call__
+    raise exc from None
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/uvicorn/middleware/debug.py", line 78, in __call__
+    await self.app(scope, receive, inner_send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/fastapi/applications.py", line 199, in __call__
+    await super().__call__(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/applications.py", line 111, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/middleware/errors.py", line 181, in __call__
+    raise exc from None
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/middleware/errors.py", line 159, in __call__
+    await self.app(scope, receive, _send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/middleware/cors.py", line 86, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/middleware/cors.py", line 142, in simple_response
+    await self.app(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/exceptions.py", line 82, in __call__
+    raise exc from None
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/exceptions.py", line 71, in __call__
+    await self.app(scope, receive, sender)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/routing.py", line 566, in __call__
+    await route.handle(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/routing.py", line 227, in handle
+    await self.app(scope, receive, send)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/starlette/routing.py", line 41, in app
+    response = await func(request)
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/fastapi/routing.py", line 209, in app
+    response_data = await serialize_response(
+  File "/media/lofy/63F9A74F7EFAB349/project/vaysik_/Vaysik-/venv/lib/python3.8/site-packages/fastapi/routing.py", line 126, in serialize_response
+    raise ValidationError(errors, field.type_)
+pydantic.error_wrappers.ValidationError: 1 validation error for Token
+response
+  value is not a valid dict (type=type_error.dict)
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [16270]
+INFO:uvicorn.error:Started server process [16299]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [16299]
+INFO:uvicorn.error:Started server process [17973]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [17973]
+INFO:uvicorn.error:Started server process [17994]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [17994]
+INFO:uvicorn.error:Started server process [18008]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [18008]
+INFO:uvicorn.error:Started server process [18022]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [18022]
+INFO:uvicorn.error:Started server process [18040]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [18040]
+INFO:uvicorn.error:Started server process [18156]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [18156]
+INFO:uvicorn.error:Started server process [18191]
+INFO:uvicorn.error:Waiting for application startup.
+INFO:uvicorn.error:Application startup complete.
+INFO:uvicorn.error:Shutting down
+INFO:uvicorn.error:Waiting for application shutdown.
+INFO:uvicorn.error:Application shutdown complete.
+INFO:uvicorn.error:Finished server process [18191]
