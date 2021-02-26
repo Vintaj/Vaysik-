@@ -15,7 +15,10 @@ router = APIRouter()
 
 @router.get("/me/")
 async def get_me(token: str = Depends(oauth2_scheme)):
+    print("token: ", token)
+    print("function begin")
     current_user = await get_current_user(token)
+    print("current_user", current_user)
     return await user_collection.find({"_id": current_user["_id"]}).to_list(length=None)
 
 
