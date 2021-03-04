@@ -30,12 +30,23 @@ async def insert_room(uid, room_name, collection):
         
     """
 
-    room = {}
+    room = {} 
     room["room_name"] = room_name
     user = await user_collection.find_one({"_id": uid})
+
+    print('new_user', user)
     room["members"] = [user] if user is not None else []
     # room = Room(**room)
+    print("members", room["members"] )
+    print('room', room)
     dbroom = RoomInDB(**room)
+    print(" dbroom ", dbroom)
+    print(" item from members room ", dbroom.members )
+
+    for i in dbroom.members:
+        print(i) 
+
+
     response = await collection.insert_one(dbroom.dict())
     return {"id_inserted": str(response.inserted_id)}
 
@@ -52,7 +63,10 @@ async def get_rooms():
 
     rows = rooms_collection.find()
     row_list = []
+    print('--fdsfasda')
+    print('rows', rows)
     async for row in rows:
+        print('row', row)
         row_list.append(RoomInDB(**row))
     return row_list
 

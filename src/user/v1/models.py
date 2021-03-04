@@ -1,7 +1,16 @@
 import re
-from typing import Optional
-from pydantic import BaseModel, validator
+from typing import Optional, List
+from bson import ObjectId
+from pydantic import BaseModel, validator, HttpUrl
 from strsimpy.jaro_winkler import JaroWinkler
+from datetime import datetime
+
+# from src.chat.v1.models import Room
+
+class UserAvatar(BaseModel):
+    url: Optional[HttpUrl] = None
+    creation_date: datetime = datetime.now()
+
 
 class User(BaseModel):
     first_name: str
@@ -9,6 +18,12 @@ class User(BaseModel):
     email: Optional[str] = ""
     username: str
     password: str
+    # rooms: List[Room] = []
+    # image: Optional[UserAvatar] = None
+    # bio: Optional[str] = None
+    # age: int = 0
+    # status: str = ""
+    # active: bool = False
 
     @validator("email")
     def email_validator(cls, v):
@@ -41,15 +56,11 @@ class User(BaseModel):
     class Config:
         orm_mode = True
 
-
 class UserDetailData(BaseModel):
     age: int
     status: str
 
-
-class UserMedia(BaseModel):
-    pass
-
-
 class FriendRequest(BaseModel):
     user_id: str
+
+

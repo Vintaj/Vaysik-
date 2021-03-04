@@ -16,6 +16,7 @@ import pymongo
 
 from .controllers import *
 from config.settings import rooms_collection, user_collection, message_collection
+from common.utils import serialize_to_mongo
 from .models import Room, RoomCreateRequest, MessageCreateRequest
 from src.authorization.v1.api import get_current_user, oauth2_scheme
 
@@ -81,14 +82,29 @@ class ConnectionManager:
 manager = ConnectionManager()
 
 @router.post("/create_room")
-async def create_room(request: RoomCreateRequest, token: str = Depends(oauth2_scheme)):
+async def create_room(request: RoomCreateRequest):
     print( f'request sosat {request.uid}' )
+
     res = await insert_room(request.uid, request.room_name, rooms_collection)
-    logging.info(f"CREATE_ROOM: request.username: {request.username}, room_name: {request.room_name}")
+    logging.info(f"CREATE_ROOM: room_name: {request.room_name}")
     return {'201': 'room created'}
 
 @router.get("/rooms")
 async def rooms(token: str = Depends(oauth2_scheme)):
+    current_user = await get_current_user(token)
+    user = await user_collection.find({"_id": current_user["_id"]}).to_list(length=None)
+    user = user[0]
+    rooms = await get_rooms()
+    # list_room = [ (i for j in i.members if j.username == user.get('username')) for i in rooms]
+    list_room = []
+    for i in rooms:
+        for j in i.members:
+            if j.username == user.get('username'):
+                list_room.append(i)
+    return list_room 
+
+@router.get("/list_room")
+async def list_room(token: str = Depends(oauth2_scheme)):
     rooms = await get_rooms()
     return rooms
 

@@ -10,6 +10,7 @@ from .models import FriendRequest, User
 from .validators import validate_login
 from datetime import datetime
 
+
 router = APIRouter()
 
 
@@ -29,6 +30,7 @@ async def create_user(user: User) -> List[dict]:
     """
     request_data = await serialize_to_mongo(jsonable_encoder(user))
 
+
     if  not await User.similarity(request_data["username"], request_data["password"]):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED, detail="Password is to similarity"
@@ -47,11 +49,12 @@ async def create_user(user: User) -> List[dict]:
         )
 
 @router.get("/get_one/")
-async def get_user_detail(username: str) -> List[dict]:
+async def get_user_username(username: str) -> List[dict]:
     """
         Returns one users depends on username
     """
     request_data = jsonable_encoder(username)
+    print("username", username)
     data = await user_collection.find(
         {"username": request_data},
         {"_id": 0, "first_name": 1, "last_name": 1, "email": 1},
@@ -62,6 +65,23 @@ async def get_user_detail(username: str) -> List[dict]:
             status_code=status.HTTP_404_NOT_FOUND, detail="UserNotFound"
         )
     return data
+
+@router.get("/detail_user/")
+async def get_user_detail(username: str) -> List[dict]:
+    """
+        Returns user detail
+    """
+    current_user = await get_current_user(token)
+    return {"200": "success"}
+
+@router.get("/user_update/")
+async def user_update(username: str) -> List[dict]:
+    """
+        Returns user detail
+    """
+    current_user = await get_current_user(token)
+    
+    return {"200": "success"}
 
 
 @router.get("/get_all/")
