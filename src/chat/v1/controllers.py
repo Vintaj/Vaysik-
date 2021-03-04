@@ -86,6 +86,22 @@ async def get_room(room_name) -> RoomInDB:
     else:
         return None
 
+async def get_room_by_id(room_id) -> RoomInDB:
+
+    """
+
+        Найти комнату по ее названию
+        Search room by her name
+        
+    """
+
+
+    row = await rooms_collection.find_one({"_id": Object(room_id)})
+    if row is not None:
+        return RoomInDB(**row)
+    else:
+        return None
+
 async def insert_message(username, content, collection):
     """
 
