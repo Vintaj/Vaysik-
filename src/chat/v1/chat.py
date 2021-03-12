@@ -150,9 +150,10 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
     try:
         while True:
             data = await websocket.receive_text()
-            await manager.send_personal_message(f"You wrote: {data}", websocket)
-            await manager.broadcast(f"Client #{client_id} says: {data}")
+            await manager.send_personal_message(data, websocket)
+            # await manager.broadcast(f"Client #{client_id} says: {data}")
             # await send_message(roomId, userId, message)
+            print("data", data)
             await send_message("601ff693fb7694b194f391f5", "601faca84b9a40393eb936db", data)
         
             print(f"You wrote: {data}", websocket)
@@ -162,3 +163,5 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
         manager.disconnect(websocket)
         await manager.broadcast(f"Client #{client_id} left the chat")
         print(f"Client #{client_id} left the chat")
+    except:
+        print('Reconnecting')
