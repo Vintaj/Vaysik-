@@ -94,7 +94,10 @@ async def rooms(token: str = Depends(oauth2_scheme)):
     current_user = await get_current_user(token)
     user = await user_collection.find({"_id": current_user["_id"]}).to_list(length=None)
     user = user[0]
-    rooms = await get_rooms()
+    try:
+        rooms = await get_rooms()
+    except:
+        return []
     # list_room = [ (i for j in i.members if j.username == user.get('username')) for i in rooms]
     list_room = []
     for i in rooms:
@@ -152,12 +155,7 @@ async def websocket_endpoint(websocket: WebSocket, client_id: int):
             data = await websocket.receive_text()
             await manager.send_personal_message(data, websocket)
             # await manager.broadcast(f"Client #{client_id} says: {data}")
-            # await send_message(roomId, userId, message)
-            print("data", data)
-            await send_message("601ff693fb7694b194f391f5", "601faca84b9a40393eb936db", data)
-        
-            print(f"You wrote: {data}", websocket)
-            print(f"Client #{client_id} says: {data}")
+            await send_message(data)
 
     except WebSocketDisconnect:
         manager.disconnect(websocket)

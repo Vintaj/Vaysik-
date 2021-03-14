@@ -1,5 +1,6 @@
 import hashlib
 import uuid
+import json
 from bson import ObjectId
 
 
@@ -165,7 +166,7 @@ async def get_message(content) -> MessageInDB:
     else:
         return None
 
-async def send_message(roomId, userId, message):
+async def send_message(data):
 
     """
         
@@ -176,21 +177,25 @@ async def send_message(roomId, userId, message):
         
     """
 
-    user = await user_collection.find_one({"id": userId})
-    room = await rooms_collection.find_one({"_id": ObjectId(roomId)})
+    message_obj = json.loads(data)
+    print( "opa", message_obj )
+
+    username = message_obj.get('user_name')
+    print("user_name: ", username)
+    room_name = message_obj.get('room_name')
+    print("room_name: ", room_name)
+    message = message_obj.get('message')
+    print("message: ", message)
+
+    user = await user_collection.find_one({"username": username})
+    room = await rooms_collection.find_one({"room_name": room_name})
 
     new_message = message
-    insert_messageId(userId, message, message_collection)
+    insert_messageId(user.get("_id"), message, message_collection)
+
     create_message = await rooms_collection.update_one(
-            {'_id': ObjectId(roomId)}, 
+            {'_id': room.get("_id")}, 
             {'$addToSet': {'messages': new_message}}
         )
-
-    print (" ------------------------- ")
-    print (f" -- user {user}")
-    print (f" -- room {room}")
-    print (f" -- new_message {new_message}")
-    print (f" -- create_message {create_message}")
-    print (" ------------------------- ")
 
     return { '201': 'message sending' }
