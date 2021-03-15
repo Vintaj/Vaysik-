@@ -187,11 +187,14 @@ async def send_message(data):
     message = message_obj.get('message')
     print("message: ", message)
 
+    res = await insert_message(username, message, message_collection)
     user = await user_collection.find_one({"username": username})
     room = await rooms_collection.find_one({"room_name": room_name})
-
-    new_message = message
-    insert_messageId(user.get("_id"), message, message_collection)
+    print("user", user)
+    print(res.get("id_inserted"))
+    res_mes = await message_collection.find_one({"_id": ObjectId(res.get("id_inserted"))})
+    print(res_mes)
+    new_message = res_mes
 
     create_message = await rooms_collection.update_one(
             {'_id': room.get("_id")}, 

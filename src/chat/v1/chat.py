@@ -94,10 +94,7 @@ async def rooms(token: str = Depends(oauth2_scheme)):
     current_user = await get_current_user(token)
     user = await user_collection.find({"_id": current_user["_id"]}).to_list(length=None)
     user = user[0]
-    try:
-        rooms = await get_rooms()
-    except:
-        return []
+    rooms = await get_rooms()
     # list_room = [ (i for j in i.members if j.username == user.get('username')) for i in rooms]
     list_room = []
     for i in rooms:
