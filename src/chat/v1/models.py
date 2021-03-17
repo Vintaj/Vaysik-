@@ -25,7 +25,7 @@ class MessageInDB(Message):
     timestamp: datetime = Field(default_factory=datetime.utcnow)
 
 class Room(BaseModel):
-    room_name: str
+    room_name: str  
     members: List[User]
     messages: List[MessageInDB] = []
     last_pinged: datetime = Field(default_factory=datetime.utcnow)
